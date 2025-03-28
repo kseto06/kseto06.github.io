@@ -2,11 +2,15 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import { Sky } from 'three/examples/jsm/objects/Sky';
+import { ActionHandler } from '../controller/ActionHandler';
 
 export default class Environment {
     public scene: THREE.Scene;
     public camera: THREE.PerspectiveCamera;
     public renderer: THREE.WebGLRenderer;
+    public clock: THREE.Clock = new THREE.Clock();
+    public actionHandler: ActionHandler;
 
     private petals: THREE.Object3D[] = [];
     private loader = new GLTFLoader();
@@ -33,11 +37,13 @@ export default class Environment {
         this.loadEnv();
 
         window.addEventListener('resize', this.handleResize.bind(this));
+        this.actionHandler = new ActionHandler(this.camera); //Action controller
     }
 
     private loadEnv() {
         //Lighting & Properties
         this.addLighting();
+        this.addBackground();
 
         //Objects
         this.addGround();
@@ -63,12 +69,38 @@ export default class Environment {
         this.scene.add(hemi);
     }
 
+    private addBackground() {
+        // Sky background with sun:
+        const sky = new Sky();
+        sky.scale.setScalar(450000);
+        this.scene.add(sky);
+
+        const sun = new THREE.Vector3();
+        const skyUniforms = (sky.material as any).uniforms;
+
+        skyUniforms['turbidity'].value = 2;
+        skyUniforms['rayleigh'].value = 2;
+        skyUniforms['mieCoefficient'].value = 0.001;
+        skyUniforms['mieDirectionalG'].value = 0.6;
+
+        // Position the sun in the sky:
+        const phi = THREE.MathUtils.degToRad(-84);
+        const theta = THREE.MathUtils.degToRad(180);  
+        sun.setFromSphericalCoords(1, phi, theta);
+
+        skyUniforms['sunPosition'].value.copy(sun);
+
+        const sunlight = new THREE.DirectionalLight(0xffffff, 1.0);
+        sunlight.position.copy(sun).multiplyScalar(1000);
+        this.scene.add(sunlight);
+    }
+
     private addGround() {
         const groundGeo = new THREE.PlaneGeometry(10, 12);
         const groundMat = new THREE.MeshStandardMaterial({ color: 0x88cc88 });
         const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -0.06;
+        ground.position.y = 0;
         ground.position.z = 2.0
         this.scene.add(ground);
     }
@@ -104,7 +136,7 @@ export default class Environment {
         this.loader.load('/models/stone_path.glb', (gltf) => {
             const stonePath = gltf.scene;
             stonePath.scale.set(1.4, 1, 1);
-            stonePath.position.set(0, 0, 2);
+            stonePath.position.set(0, 0.073, 2);
             stonePath.rotateY(Math.PI / 2)
             this.scene.add(stonePath);
         });
@@ -211,7 +243,7 @@ export default class Environment {
             geometry.center();
 
             const material = new THREE.MeshStandardMaterial({
-                color: 0xffffff,
+                color: 0x000000,
                 metalness: 0.3,
                 roughness: 0.4,
                 side: THREE.DoubleSide
@@ -245,6 +277,8 @@ export default class Environment {
                 headingGeo.center();
         
                 const headingMesh = new THREE.Mesh(headingGeo, material);
+                headingMesh.userData.label = label;
+                this.actionHandler.registerClickable(headingMesh, label);
                 headingMesh.position.set(0, yInitial - index * spacing, 0);
                 this.scene.add(headingMesh);
             });
