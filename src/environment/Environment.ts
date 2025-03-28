@@ -3,10 +3,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
-/*
-also in the same text plane code, can I put multiple headings at once? Also with the headings, I plan to have a blog posts heading -- 
-*/
-
 export default class Environment {
     public scene: THREE.Scene;
     public camera: THREE.PerspectiveCamera;
@@ -206,13 +202,13 @@ export default class Environment {
         loader.load('/fonts/Shikamaru.json', (font) => {
             const geometry = new TextGeometry('Kaden Seto', {
                 font: font,
-                size: 0.38,         // height of letters
-                depth: 0.2,        // thickness/extrusion
-                curveSegments: 12, // smoothness
+                size: 0.38,
+                depth: 0.2,
+                curveSegments: 12,
                 bevelEnabled: false
             });
 
-            geometry.center(); // Optional: center pivot for easier placement
+            geometry.center();
 
             const material = new THREE.MeshStandardMaterial({
                 color: 0xffffff,
@@ -239,19 +235,19 @@ export default class Environment {
 
             headings.forEach((label, index) => {
                 const headingGeo = new TextGeometry(label, {
-                  font: font,
-                  size: 0.25,
-                  depth: 0.08,
-                  curveSegments: 10,
-                  bevelEnabled: false,
+                    font: font,
+                    size: 0.25,
+                    depth: 0.08,
+                    curveSegments: 10,
+                    bevelEnabled: false,
                 });
-          
+        
                 headingGeo.center();
-          
+        
                 const headingMesh = new THREE.Mesh(headingGeo, material);
                 headingMesh.position.set(0, yInitial - index * spacing, 0);
                 this.scene.add(headingMesh);
-              });
+            });
             });
         }, undefined, (e) => {
             console.error(e);
