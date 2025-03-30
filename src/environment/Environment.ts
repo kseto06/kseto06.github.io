@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { manager } from './Manager'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
@@ -15,7 +16,7 @@ export default class Environment {
     public composer: EffectComposer;
 
     private petals: THREE.Object3D[] = [];
-    private loader = new GLTFLoader();
+    private loader = new GLTFLoader(manager);
 
     constructor(container: HTMLElement) {
         // Scene setup
@@ -234,7 +235,7 @@ export default class Environment {
     }
 
     private addTextPlane() {
-        const loader = new FontLoader();
+        const loader = new FontLoader(manager);
         const headings = ["about me", "projects", "experience", "education"]
 
         loader.load('/fonts/Shikamaru.json', (font) => {

@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Yuji+Boku&display=swap');
+
+#loading-screen {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: white;
+    font-size: 6rem;
+    font-family: "Yuji Boku", serif;
+    font-style: normal;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+  
+#loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
