@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Sky } from 'three/examples/jsm/objects/Sky';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { ActionHandler } from '../controller/ActionHandler';
 
 export default class Environment {
@@ -11,6 +12,7 @@ export default class Environment {
     public renderer: THREE.WebGLRenderer;
     public clock: THREE.Clock = new THREE.Clock();
     public actionHandler: ActionHandler;
+    public composer: EffectComposer;
 
     private petals: THREE.Object3D[] = [];
     private loader = new GLTFLoader();
@@ -34,10 +36,13 @@ export default class Environment {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(this.renderer.domElement);
 
+        //Effect composer
+        this.composer = new EffectComposer(this.renderer);
+
         this.loadEnv();
 
         window.addEventListener('resize', this.handleResize.bind(this));
-        this.actionHandler = new ActionHandler(this.camera); //Action controller
+        this.actionHandler = new ActionHandler(this.scene, this.camera, this.composer); //Action controller
     }
 
     private loadEnv() {
@@ -203,6 +208,7 @@ export default class Environment {
     public update() {
         this.animatePetals();
         this.renderer.render(this.scene, this.camera);
+        this.composer.render();
     }
 
     private animatePetals() {
@@ -282,7 +288,7 @@ export default class Environment {
                 headingMesh.position.set(0, yInitial - index * spacing, 0);
                 this.scene.add(headingMesh);
             });
-            });
+        });
         }, undefined, (e) => {
             console.error(e);
         });

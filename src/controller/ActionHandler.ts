@@ -1,42 +1,91 @@
-import { createProjectPopup } from '../pages/projects';
 import * as THREE from 'three';
+import { createProjectPopup } from '../pages/projects';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader';
 
 export class ActionHandler {
-  private raycaster = new THREE.Raycaster();
-  private mouse = new THREE.Vector2();
-  private clickableMeshes: THREE.Mesh[] = [];
+    private raycaster = new THREE.Raycaster();
+    private mouse = new THREE.Vector2();
+    private clickableMeshes: THREE.Mesh[] = [];
 
-  constructor(camera: THREE.Camera) {
-    window.addEventListener('click', (event) => {
-      this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    //Outlining meshes
+    private hovered: THREE.Object3D | null = null;
+    private outline: OutlinePass;
 
-      this.raycaster.setFromCamera(this.mouse, camera);
-      const intersects = this.raycaster.intersectObjects(this.clickableMeshes);
+    constructor(scene: THREE.Scene, camera: THREE.Camera, composer: EffectComposer) {
+        // Base rendering pass
+        composer.addPass(new RenderPass(scene, camera));
 
-      if (intersects.length > 0) {
-        const mesh = intersects[0].object;
-        const label = (mesh as any).userData.label;
+        // Construct the new outlinePass for mesh outlining
+        this.outline = new OutlinePass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            scene,
+            camera
+        );
 
-        console.log('Clicked:', label);
+        this.outline.edgeStrength = 1.2;
+        this.outline.edgeGlow = 1.5;
+        this.outline.edgeThickness = 0.2;
+        this.outline.pulsePeriod = 0;
+        this.outline.visibleEdgeColor.set('#ffe8a1');
+        this.outline.hiddenEdgeColor.set('#000000');
 
-        if (label == 'projects') {
-            const page = document.getElementById('projects');
-            if (!page) {
-                const page = createProjectPopup();
-                document.body.appendChild(page);
+        composer.addPass(this.outline);
 
-                console.log('📦 Popup element added:', page);
-                console.log('📦 Is in DOM:', document.body.contains(page)); // Should be true
+        //Add the gamma correction so the env doesn't render dark
+        composer.addPass(new ShaderPass(GammaCorrectionShader));
 
+        // Check for clicks on the meshes
+        window.addEventListener('click', (event) => {
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            this.raycaster.setFromCamera(this.mouse, camera);
+            const intersects = this.raycaster.intersectObjects(this.clickableMeshes);
+
+            if (intersects.length > 0) {
+                const mesh = intersects[0].object;
+                const label = (mesh as any).userData.label;
+
+                console.log('Clicked:', label);
+
+                if (label == 'projects') {
+                    const page = document.getElementById('projects');
+                    if (!page) {
+                        const page = createProjectPopup();
+                        document.body.appendChild(page);
+                    }
+                }
             }
-        }
-      }
-    });
-  }
+        });
 
-  public registerClickable(mesh: THREE.Mesh, label: string) {
-    mesh.userData.label = label;
-    this.clickableMeshes.push(mesh);
-  }
+        //Check for hovering on the meshes:
+        window.addEventListener('mousemove', (event) => {
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            this.raycaster.setFromCamera(this.mouse, camera);
+            const intersects = this.raycaster.intersectObjects(this.clickableMeshes);
+
+            if (intersects.length > 0) {
+                const hoveredMesh = intersects[0].object;
+
+                if (hoveredMesh !== this.hovered) {
+                this.hovered = hoveredMesh;
+                this.outline.selectedObjects = [hoveredMesh];
+                }
+            } else {
+                this.outline.selectedObjects = [];
+                this.hovered = null;
+            }
+        });
+    }
+
+    public registerClickable(mesh: THREE.Mesh, label: string) {
+        mesh.userData.label = label;
+        this.clickableMeshes.push(mesh);
+    }
 }
