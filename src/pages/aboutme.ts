@@ -1,109 +1,5 @@
 const mainContent: string = `
-    <style>
-    @font-face {
-        font-family: 'MaruMinya';
-        src: url('/fonts/MaruMinya.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    .popup-wrapper {
-        font-family: 'MaruMinya';
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%;
-        max-width: 800px;
-        max-height: 80vh;
-        overflow-y: auto;
-        padding: 2rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        background-color: white;
-        color: black;
-        z-index: 9999;
-    }
-
-    .popup-bg {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-image: url('/images/calligraphy.jpg');
-        background-size: cover;
-        background-position: center;
-        opacity: 0.15;
-        border-radius: 0.5rem;
-        z-index: 0;
-    }
-
-    .popup-content {
-        position: relative;
-        z-index: 1;
-        min-height: 625px; /* Adjust this as needed */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .popup-title {
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-    }
-
-    .aboutme {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 1.5rem;
-        padding: 1rem 0;
-    }
-
-    .aboutme img {
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-top: 1rem;
-    }
-
-    .content {
-        flex-grow: 0.5;
-    }
-
-    .title {
-        font-family: 'MaruMinya', sans-serif;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .desc {
-        font-size: 1.1rem;
-        color: #444;
-        line-height: 1.2;
-    }
-
-    .links {
-        font-size: 1.1rem;
-        word-spacing: 4ch;
-        align-items: center;
-        text-align: center;
-    }
-
-    .links a {
-        text-decoration: none;
-    }
-
-    .popup-close {
-        font-size: 0.75rem;
-        color: #666;
-        margin-top: 1.5rem;
-        text-align: center;
-        cursor: pointer;
-    }
-    </style>
-
+    <link rel="stylesheet" href="/styles/aboutme.css" />
     <div class="popup-wrapper">
     <div class="popup-bg"></div>
     <div class="popup-content">
@@ -145,8 +41,10 @@ const mainContent: string = `
             </div>
         </div>
 
+        <div class="popup-close-wrapper">
+            <div class="popup-close">click anywhere to close</div>
+        </div>
 
-        <div class="popup-close">click anywhere to close</div>
     </div>
 `;
 
@@ -166,6 +64,10 @@ export function createAboutMePopup(): HTMLElement {
             }
         },
         );
+
+        wrapper.querySelector('.popup-close-wrapper')?.addEventListener('click', () => {
+            wrapper.remove();
+        });
     });
 
     return wrapper;

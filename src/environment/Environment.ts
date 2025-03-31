@@ -328,6 +328,8 @@ export default class Environment {
                 });
         
                 headingGeo.center();
+                headingGeo.computeBoundingBox();
+                headingGeo.boundingBox?.expandByScalar(1.2);
         
                 const headingMesh = new THREE.Mesh(headingGeo, material);
                 headingMesh.userData.label = label;

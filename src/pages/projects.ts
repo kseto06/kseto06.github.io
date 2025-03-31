@@ -1,102 +1,5 @@
 const mainContent: string = `
-    <style>
-    @font-face {
-        font-family: 'MaruMinya';
-        src: url('/fonts/MaruMinya.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    .popup-wrapper {
-        font-family: 'MaruMinya';
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 90%;
-        max-width: 800px;
-        max-height: 80vh;
-        overflow-y: auto;
-        padding: 2rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        background-color: white;
-        color: black;
-        z-index: 9999;
-    }
-
-    .popup-bg {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-image: url('/images/calligraphy.jpg');
-        background-size: cover;
-        background-position: center;
-        opacity: 0.15;
-        border-radius: 0.5rem;
-        z-index: 0;
-    }
-
-    .popup-content {
-        position: relative;
-        z-index: 1;
-        min-height: 625px; /* Adjust this as needed */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .popup-title {
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-    }
-
-    .project {
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        border-top: 1px solid #ddd;
-        padding: 1.2rem 0;
-    }
-
-    .project img {
-        width: 140px;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 0.5rem;
-    }
-
-    .project-content {
-        flex-grow: 1;
-    }
-
-    .project-title {
-        font-family: 'MaruMinya', sans-serif;
-        font-size: 1.1rem;
-        font-weight: bold;
-    }
-
-    .project-desc {
-        font-size: 0.9rem;
-        color: #444;
-        margin-top: 0.25rem;
-    }
-
-    .project-date {
-        font-size: 0.8rem;
-        color: #0066cc;
-        white-space: nowrap;
-    }
-
-    .popup-close {
-        font-size: 0.75rem;
-        color: #666;
-        margin-top: 1.5rem;
-        text-align: center;
-        cursor: pointer;
-    }
-    </style>
-
+    <link rel="stylesheet" href="/styles/projects.css" />
     <div class="popup-wrapper">
     <div class="popup-bg"></div>
     <div class="popup-content">
@@ -138,7 +41,10 @@ const mainContent: string = `
             <div class="project-date">Sep 2024 - Oct 2024</div>
         </div>
 
-        <div class="popup-close">click anywhere to close</div>
+        <div class="popup-close-wrapper">
+            <div class="popup-close">click anywhere to close</div>
+        </div>
+
     </div>
 `;
 
@@ -158,6 +64,10 @@ export function createProjectPopup(): HTMLElement {
             }
         },
         );
+
+        wrapper.querySelector('.popup-close-wrapper')?.addEventListener('click', () => {
+            wrapper.remove();
+        });
     });
 
     wrapper.querySelector('.popup-wrapper')?.addEventListener('click', (event) => {
@@ -184,18 +94,37 @@ function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElement, pro
         popupContent.innerHTML = `
             <h2 class="popup-title">UTMIST AI^2 Tournament</h2>
                 <p>Details about the tournament...</p>
-            <div class="popup-close">← back</div>
         `;
     } else if (projectId === 'aegis') {
         popupContent.innerHTML = `
             <h2 class="popup-title">Aegis</h2>
-                <p>Details about the cyclist detection system...</p>
-            <div class="popup-close">← back</div>
+                <p>
+                    In recent years, cycling injuries have increased despite the presence of various safety measures in Toronto. Many of these accidents go unnoticed outside the cycling community. Thus, our team aims to enhance safety by improving driver awareness. 
+                    <br>
+                    <br>
+                    To better understand the challenges cyclists face, we spoke to Jun Nogami, a lead organizer from Advocacy for Respect for Cyclists (ARC). For context, ARC is a Toronto-based advocacy group dedicated to promoting the safety, rights and respect of cyclists. Through initiatives such as ghost bike memorials, driver awareness campaigns, and collaborations with other cycling coalitions, ARC works to reduce cycling accidents in Toronto. 
+                    <br>
+                    <br>
+                    The primary stakeholders are cyclists and motorized vehicles who are directly impacted by right-hook collisions. Secondary stakeholders include cycling coalitions, families of cyclists, pedestrians, government officials, and our team. Discussions with ARC and research on the cycling data and experiences in Toronto and the Greater Toronto Area helped us define the key requirements for the ideal solution. 
+                    <br>
+                    <br>
+                    The need is to keep cyclists safe by increasing driver awareness in hopes of preventing right-hook collisions. The implementation of the solution is not restricted strictly to motorized vehicles or bikes. An effective solution must adhere to the three high-level objectives: safety, legality, and accessibility. 
+                    <br>
+                    <br>
+                    Current existing solutions range from bike accessories (namely rearview mirrors on bike handlebars, tail lights with cameras attached, and pool noodle attachments) and car features (such as blind spot detectors and Tesla’s computer vision), to infrastructure (like Dutch-style intersections). These designs enhance cycling safety by increasing cyclists' awareness, which opposes the goal of raising driver's attention as cyclists are the most vulnerable in the shared road space. The existing solutions lack the focus on increasing driver awareness, hence alternative solutions framed by the requirements included in the RFP are required. 
+                </p>
         `;
     }
 
+    const backWrapper = document.createElement('div');
+    backWrapper.className = 'popup-back-wrapper';
+    backWrapper.innerHTML = `<div class="popup-close">← back</div>`;
+
+    const popupWrapper = wrapper.querySelector('.popup-wrapper');
+    popupWrapper?.appendChild(backWrapper);
+
     // Attach event listener for the back button
-    popupContent.querySelector('.popup-close')?.addEventListener('click', (e) => {
+    backWrapper.querySelector('.popup-close')?.addEventListener('click', (e) => {
         e.stopPropagation();
         wrapper.innerHTML = mainContent;
 
