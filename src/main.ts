@@ -1,9 +1,9 @@
 import Environment from './environment/Environment';
 import CameraControls from './controller/Camera';
 
-const container = document.body;
-const env = new Environment(container);
-const controls = new CameraControls(env.camera, env.renderer);
+const container: HTMLElement = document.body;
+const env: Environment = new Environment(container);
+const controls: CameraControls = new CameraControls(env.camera, env.renderer);
 
 const animate = () => {
     requestAnimationFrame(animate);

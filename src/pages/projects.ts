@@ -143,7 +143,7 @@ const mainContent: string = `
 `;
 
 export function createProjectPopup(): HTMLElement {
-    const wrapper = document.createElement('div');
+    const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.id = "projects";
     wrapper.innerHTML = mainContent;
 

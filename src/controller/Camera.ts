@@ -12,7 +12,7 @@ export default class CameraControls {
         this.controls.target.set(0, 1, 0);
     }
 
-    update() {
+    update(): void {
         this.controls.update();
     }
 }

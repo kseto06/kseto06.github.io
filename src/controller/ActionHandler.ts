@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { createProjectPopup } from '../pages/projects';
+import { createAboutMePopup } from '../pages/aboutme';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
@@ -52,10 +53,15 @@ export class ActionHandler {
 
                 console.log('Clicked:', label);
 
-                if (label == 'projects') {
-                    const page = document.getElementById('projects');
+                if (label) {
+                    var page: HTMLElement | null = document.getElementById(label);
                     if (!page) {
-                        const page = createProjectPopup();
+                        page = createProjectPopup(); //Default: projects
+
+                        if (label === "about me") {
+                            page = createAboutMePopup();
+                        }
+
                         document.body.appendChild(page);
                     }
                 }
@@ -68,10 +74,10 @@ export class ActionHandler {
             this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
             this.raycaster.setFromCamera(this.mouse, camera);
-            const intersects = this.raycaster.intersectObjects(this.clickableMeshes);
+            const intersects: THREE.Intersection<THREE.Object3D<THREE.Object3DEventMap>>[] = this.raycaster.intersectObjects(this.clickableMeshes);
 
             if (intersects.length > 0) {
-                const hoveredMesh = intersects[0].object;
+                const hoveredMesh: THREE.Object3D<THREE.Object3DEventMap> = intersects[0].object;
 
                 if (hoveredMesh !== this.hovered) {
                 this.hovered = hoveredMesh;
@@ -84,7 +90,7 @@ export class ActionHandler {
         });
     }
 
-    public registerClickable(mesh: THREE.Mesh, label: string) {
+    public registerClickable(mesh: THREE.Mesh, label: string): void {
         mesh.userData.label = label;
         this.clickableMeshes.push(mesh);
     }

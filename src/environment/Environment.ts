@@ -16,7 +16,7 @@ export default class Environment {
     public composer: EffectComposer;
 
     private petals: THREE.Object3D[] = [];
-    private loader = new GLTFLoader(manager);
+    private loader: GLTFLoader  = new GLTFLoader(manager);
 
     constructor(container: HTMLElement) {
         // Scene setup
@@ -46,7 +46,7 @@ export default class Environment {
         this.actionHandler = new ActionHandler(this.scene, this.camera, this.composer); //Action controller
     }
 
-    private loadEnv() {
+    private loadEnv(): void {
         //Lighting & Properties
         this.addLighting();
         this.addBackground();
@@ -63,26 +63,32 @@ export default class Environment {
         this.addTextPlane();
     }
 
-    private addLighting() {
-        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    public update(): void {
+        this.animatePetals();
+        this.renderer.render(this.scene, this.camera);
+        this.composer.render();
+    }
+
+    private addLighting(): void {
+        const ambient: THREE.AmbientLight = new THREE.AmbientLight(0xffffff, 0.6);
         this.scene.add(ambient);
 
-        const sun = new THREE.DirectionalLight(0xffffff, 0.8);
+        const sun: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
         sun.position.set(5, 10, 7.5);
         this.scene.add(sun);
 
-        const hemi = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+        const hemi: THREE.HemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
         this.scene.add(hemi);
     }
 
-    private addBackground() {
+    private addBackground(): void {
         // Sky background with sun:
-        const sky = new Sky();
+        const sky: Sky = new Sky();
         sky.scale.setScalar(450000);
         this.scene.add(sky);
 
-        const sun = new THREE.Vector3();
-        const skyUniforms = (sky.material as any).uniforms;
+        const sun: THREE.Vector3 = new THREE.Vector3();
+        const skyUniforms: any = (sky.material as any).uniforms;
 
         skyUniforms['turbidity'].value = 2;
         skyUniforms['rayleigh'].value = 2;
@@ -90,18 +96,18 @@ export default class Environment {
         skyUniforms['mieDirectionalG'].value = 0.6;
 
         // Position the sun in the sky:
-        const phi = THREE.MathUtils.degToRad(-84);
-        const theta = THREE.MathUtils.degToRad(180);  
+        const phi: number= THREE.MathUtils.degToRad(-84);
+        const theta: number = THREE.MathUtils.degToRad(180);  
         sun.setFromSphericalCoords(1, phi, theta);
 
         skyUniforms['sunPosition'].value.copy(sun);
 
-        const sunlight = new THREE.DirectionalLight(0xffffff, 1.0);
+        const sunlight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
         sunlight.position.copy(sun).multiplyScalar(1000);
         this.scene.add(sunlight);
     }
 
-    private addGround() {
+    private addGround(): void {
         const groundGeo = new THREE.PlaneGeometry(10, 12);
         const groundMat = new THREE.MeshStandardMaterial({ color: 0x88cc88 });
         const ground = new THREE.Mesh(groundGeo, groundMat);
@@ -111,36 +117,36 @@ export default class Environment {
         this.scene.add(ground);
     }
 
-    private loadToriiGate() {
+    private loadToriiGate(): void {
         this.loader.load('/models/torii_gate.glb', (gltf) => {
-            const torii = gltf.scene;
+            const torii: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             torii.scale.set(1, 1, 1);
             torii.position.set(0, 0, 0);
             this.scene.add(torii);
         });
     }
       
-    private loadTrees() {
+    private loadTrees(): void {
         this.loader.load('/models/sakura_tree_low_poly_model.glb', (gltf) => {
-            const tree = gltf.scene;
+            const tree: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             tree.scale.set(15, 15, 15);
         
-            const spacing = 4; // Spacing between lanterns
-            const zOffset = 0; 
+            const spacing: number = 4; // Spacing between lanterns
+            const zOffset: number = 0; 
         
-            const leftTree = tree.clone();
+            const leftTree: THREE.Group<THREE.Object3DEventMap> = tree.clone();
             leftTree.position.set(-spacing, 0, zOffset);
             this.scene.add(leftTree);
         
-            const rightTree = tree.clone();
+            const rightTree: THREE.Group<THREE.Object3DEventMap> = tree.clone();
             rightTree.position.set(spacing, 0, zOffset);
             this.scene.add(rightTree);
         });
     }
       
-    private loadStonePath() {
+    private loadStonePath(): void {
         this.loader.load('/models/stone_path.glb', (gltf) => {
-            const stonePath = gltf.scene;
+            const stonePath: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             stonePath.scale.set(1.4, 1, 1);
             stonePath.position.set(0, 0.073, 2);
             stonePath.rotateY(Math.PI / 2)
@@ -148,13 +154,13 @@ export default class Environment {
         });
     }
       
-    private loadLanterns() {
+    private loadLanterns(): void {
         this.loader.load('/models/stone_lantern.glb', (gltf) => {
-            const lantern = gltf.scene;
+            const lantern: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             lantern.scale.set(0.01, 0.01, 0.01);
         
-            const spacing = 2.0;
-            const xOffset = 1.5;
+            const spacing: number = 2.0;
+            const xOffset: number = 1.5;
         
             for (let i = 0; i < 3; i++) { //3 lanterns
                 const z = -i * spacing;
@@ -171,8 +177,8 @@ export default class Environment {
     }
       
 
-    private loadPetals() {
-        const path = '/models/cherry_blossom_petal.glb';
+    private loadPetals(): void {
+        const path: string = '/models/cherry_blossom_petal.glb';
         this.loader.load(path, (gltf) => {
             const model = gltf.scene;
             model.scale.set(0.2, 0.2, 0.2);
@@ -199,20 +205,7 @@ export default class Environment {
         });
     }
 
-    private addDebugCube() {
-        const geo = new THREE.BoxGeometry();
-        const mat = new THREE.MeshStandardMaterial({ color: 0xff69b4 });
-        const cube = new THREE.Mesh(geo, mat);
-        this.scene.add(cube);
-    }
-
-    public update() {
-        this.animatePetals();
-        this.renderer.render(this.scene, this.camera);
-        this.composer.render();
-    }
-
-    private animatePetals() {
+    private animatePetals(): void {
         for (const petal of this.petals) {
             petal.position.y -= 0.01; // Falling
             petal.position.x += Math.sin(Date.now() * 0.001 + petal.position.y) * 0.001; // Flutter
@@ -228,15 +221,15 @@ export default class Environment {
     }
 
     //Function to handle window resizing
-    private handleResize() {
+    private handleResize(): void {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    private addTextPlane() {
-        const loader = new FontLoader(manager);
-        const headings = ["about me", "projects", "experience", "education"]
+    private addTextPlane(): void {
+        const loader: FontLoader = new FontLoader(manager);
+        const headings: string[] = ["about me", "projects", "experience", "education"]
 
         loader.load('/fonts/Shikamaru.json', (font) => {
             const geometry = new TextGeometry('Kaden Seto', {
