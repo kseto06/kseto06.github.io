@@ -135,7 +135,7 @@ export default class Environment {
         })
 
         //Apply the grass texture to the ground
-        const groundGeo = new THREE.PlaneGeometry(10, 12, 50, 60);
+        const groundGeo = new THREE.PlaneGeometry(10, 11.6, 50, 60);
         const [
             colorMap,
             normalMap,
@@ -196,7 +196,7 @@ export default class Environment {
         this.loader.load('/models/stone_path.glb', (gltf) => {
             const stonePath: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             stonePath.scale.set(1.4, 1, 1);
-            stonePath.position.set(0, 0.1944, 2);
+            stonePath.position.set(0, 0.1944, 1.9);
             stonePath.rotateY(Math.PI / 2)
             this.addShadow(stonePath);
             this.scene.add(stonePath);
