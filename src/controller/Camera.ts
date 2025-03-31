@@ -14,5 +14,8 @@ export default class CameraControls {
 
     update(): void {
         this.controls.update();
+
+        //Prevent down rotation
+        this.controls.maxPolarAngle = Math.PI / 2;
     }
 }

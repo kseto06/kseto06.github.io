@@ -35,6 +35,8 @@ export default class Environment {
         // Renderer setup
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(this.renderer.domElement);
 
         //Effect composer
@@ -102,18 +104,61 @@ export default class Environment {
 
         skyUniforms['sunPosition'].value.copy(sun);
 
-        const sunlight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-        sunlight.position.copy(sun).multiplyScalar(1000);
+        const sunlight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        sunlight.position.set(-10, 12.5, 10);
+        sunlight.target.position.set(0, 0, 0);
+        sunlight.shadow.bias = -0.001;
+        sunlight.shadow.mapSize.width = 2048;
+        sunlight.shadow.mapSize.height = 2048;
+        sunlight.shadow.camera.near = 0.5;
+        sunlight.shadow.camera.far = 50;
+        sunlight.castShadow = true;
+        //sunlight.position.copy(sun).multiplyScalar(1000);
         this.scene.add(sunlight);
     }
 
     private addGround(): void {
-        const groundGeo = new THREE.PlaneGeometry(10, 12);
-        const groundMat = new THREE.MeshStandardMaterial({ color: 0x88cc88 });
-        const ground = new THREE.Mesh(groundGeo, groundMat);
+        //Add the grass texture
+        const textureLoader: THREE.TextureLoader = new THREE.TextureLoader(manager);
+
+        //Add the maps for the texture
+        const maps: THREE.Texture[] = [textureLoader.load('/textures/grass/Color.jpg'), 
+                                       textureLoader.load('/textures/grass/NormalGL.jpg'), 
+                                       textureLoader.load('/textures/grass/Roughness.jpg'),
+                                       textureLoader.load('/textures/grass/AmbientOcclusion.jpg'),
+                                       textureLoader.load('/textures/grass/Displacement.jpg')];
+            
+        //Apply texture
+        maps.forEach(texture => {
+            texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(1, 1);
+        })
+
+        //Apply the grass texture to the ground
+        const groundGeo = new THREE.PlaneGeometry(10, 12, 50, 60);
+        const [
+            colorMap,
+            normalMap,
+            roughnessMap,
+            aoMap,
+            displacementMap
+        ] = maps;
+          
+        const groundMaterial = new THREE.MeshStandardMaterial({
+            map: colorMap,
+            normalMap: normalMap,
+            roughnessMap: roughnessMap,
+            aoMap: aoMap,
+            displacementMap: displacementMap,
+            displacementScale: 0.2,
+        });
+
+        const ground = new THREE.Mesh(groundGeo, groundMaterial);
+
+        ground.receiveShadow = true;
         ground.rotation.x = -Math.PI / 2;
         ground.position.y = 0;
-        ground.position.z = 2.0
+        ground.position.z = 2.0;
         this.scene.add(ground);
     }
 
@@ -122,6 +167,7 @@ export default class Environment {
             const torii: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             torii.scale.set(1, 1, 1);
             torii.position.set(0, 0, 0);
+            this.addShadow(torii);
             this.scene.add(torii);
         });
     }
@@ -136,10 +182,12 @@ export default class Environment {
         
             const leftTree: THREE.Group<THREE.Object3DEventMap> = tree.clone();
             leftTree.position.set(-spacing, 0, zOffset);
+            this.addShadow(leftTree);
             this.scene.add(leftTree);
         
             const rightTree: THREE.Group<THREE.Object3DEventMap> = tree.clone();
             rightTree.position.set(spacing, 0, zOffset);
+            this.addShadow(rightTree);
             this.scene.add(rightTree);
         });
     }
@@ -148,8 +196,9 @@ export default class Environment {
         this.loader.load('/models/stone_path.glb', (gltf) => {
             const stonePath: THREE.Group<THREE.Object3DEventMap> = gltf.scene;
             stonePath.scale.set(1.4, 1, 1);
-            stonePath.position.set(0, 0.073, 2);
+            stonePath.position.set(0, 0.1944, 2);
             stonePath.rotateY(Math.PI / 2)
+            this.addShadow(stonePath);
             this.scene.add(stonePath);
         });
     }
@@ -167,10 +216,12 @@ export default class Environment {
         
                 const leftLantern = lantern.clone();
                 leftLantern.position.set(-xOffset + 0.5, 0, z + 5);
+                this.addShadow(leftLantern);
                 this.scene.add(leftLantern);
         
                 const rightLantern = lantern.clone();
                 rightLantern.position.set(xOffset + 0.5, 0, z + 5);
+                this.addShadow(rightLantern);
                 this.scene.add(rightLantern);
             }
         });
@@ -235,7 +286,7 @@ export default class Environment {
             const geometry = new TextGeometry('Kaden Seto', {
                 font: font,
                 size: 0.38,
-                depth: 0.2,
+                depth: 0.01,
                 curveSegments: 12,
                 bevelEnabled: false
             });
@@ -243,16 +294,18 @@ export default class Environment {
             geometry.center();
 
             const material = new THREE.MeshStandardMaterial({
-                color: 0x000000,
+                color: 0xffc0cb,
                 metalness: 0.3,
                 roughness: 0.4,
-                side: THREE.DoubleSide
+                side: THREE.DoubleSide,
+                emissive: new THREE.Color(0xffc0cb),
+                emissiveIntensity: 0.6 
             });
 
             const mesh = new THREE.Mesh(geometry, material);
 
             // Position under the Torii gate's top beam
-            mesh.position.set(0, 4.15, 0.25);
+            mesh.position.set(0, 4.15, 0.127);
             this.scene.add(mesh);
 
         loader.load('/fonts/Mori.json', (font) => {
@@ -285,6 +338,15 @@ export default class Environment {
         });
         }, undefined, (e) => {
             console.error(e);
+        });
+    }
+
+    private addShadow(model: THREE.Group<THREE.Object3DEventMap>): void {
+        model.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
         });
     }
 }
