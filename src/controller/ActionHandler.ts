@@ -79,12 +79,17 @@ export class ActionHandler {
             this.raycaster.setFromCamera(this.mouse, camera);
             const intersects: THREE.Intersection<THREE.Object3D<THREE.Object3DEventMap>>[] = this.raycaster.intersectObjects(this.clickableMeshes);
 
+            this.clickableMeshes.forEach(mesh => {
+                if (mesh.userData.linkedText) {
+                    mesh.userData.linkedText.material.emissiveIntensity = 0;
+                }
+            });
+        
             if (intersects.length > 0) {
-                const hoveredMesh: THREE.Object3D<THREE.Object3DEventMap> = intersects[0].object;
-
-                if (hoveredMesh !== this.hovered) {
-                this.hovered = hoveredMesh;
-                this.outline.selectedObjects = [hoveredMesh];
+                const hitbox: THREE.Object3D<THREE.Object3DEventMap> = intersects[0].object;
+                if (hitbox.userData?.linkedText) {
+                    this.hovered = hitbox;
+                    this.outline.selectedObjects = [hitbox.userData.linkedText];
                 }
             } else {
                 this.outline.selectedObjects = [];

@@ -12,7 +12,11 @@ const mainContent: string = `
         </div>
 
         <a href="/files/${resumeFileName}.pdf" target="_blank" class="pdf-link">
-            <div class="click-label">click on the page for the pdf :D</div>
+            <div class="click-label">
+                click on the page for the pdf :D
+                <br>
+                last updated: jan. 2025
+            </div>
             <div id="pdf-container" class="pdf-container"></div>
         </a>
     </div>

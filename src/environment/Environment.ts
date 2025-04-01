@@ -336,6 +336,27 @@ export default class Environment {
                 this.actionHandler.registerClickable(headingMesh, label);
                 headingMesh.position.set(0, yInitial - index * spacing, 0);
                 this.scene.add(headingMesh);
+
+                //Hitbox
+                const hitboxGeo = new THREE.BoxGeometry(
+                    (headingGeo.boundingBox!.max.x - headingGeo.boundingBox!.min.x) * 0.45,
+                    0.3,
+                    0.1 
+                );
+
+                const hitboxMesh = new THREE.Mesh(
+                    hitboxGeo,
+                    new THREE.MeshBasicMaterial({ visible: false })
+                );
+
+                hitboxMesh.position.copy(headingMesh.position);
+                hitboxMesh.position.z -= 0.05; 
+                
+                // Link text mesh to hitbox
+                hitboxMesh.userData.linkedText = headingMesh;
+                
+                this.scene.add(hitboxMesh);
+                this.actionHandler.registerClickable(hitboxMesh, label);
             });
         });
         }, undefined, (e) => {
