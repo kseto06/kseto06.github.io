@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { createProjectPopup } from '../pages/projects';
 import { createAboutMePopup } from '../pages/aboutme';
+import { createExperiencePopup } from '../pages/experience';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
@@ -60,6 +61,8 @@ export class ActionHandler {
 
                         if (label === "about me") {
                             page = createAboutMePopup();
+                        } else if (label === "experience") {
+                            page = createExperiencePopup();
                         }
 
                         document.body.appendChild(page);

@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'MaruMinya';
+    src: url('/fonts/MaruMinya.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.resume-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.resume-popup-box {
+    display: block;
+    text-decoration: none;
+    position: relative;
+}
+
+.resume-popup-box:hover {
+    background: transparent;
+    transition: background 0.2s ease;
+}
+
+.pdf-container, .click-label {
+    pointer-events: none;
+}
+
+.resume-popup-box {
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    background-color: transparent;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* Hiding scrollbar: */
+.resume-popup-box::-webkit-scrollbar {
+    display: none;
+}
+
+.resume-popup-box {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.pdf-container canvas {
+    width: 100% !important;
+    height: auto !important;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pdf-link {
+    position: sticky;
+    bottom: 1rem;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    font-family: 'MaruMinya';
+}
+
+.click-label {
+    position: relative;
+    font-family: 'MaruMinya';
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    color: #000;
+    margin-bottom: 0.75rem;
+    pointer-events: none;
+    bottom: -40px;
+}
+
+.popup-close-wrapper {
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+.popup-close {
+    font-family: 'MaruMinya';
+    font-size: 0.75rem;
+    color: #000;
+    margin-top: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+}

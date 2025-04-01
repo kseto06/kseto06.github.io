@@ -1,5 +1,7 @@
 const mainContent: string = `
-    <link rel="stylesheet" href="/styles/aboutme.css" />
+
+<link rel="stylesheet" href="/styles/aboutme.css" />
+
     <div class="popup-wrapper">
     <div class="popup-bg"></div>
     <div class="popup-content">

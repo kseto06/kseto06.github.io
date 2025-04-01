@@ -13,8 +13,8 @@
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 800px;
-    max-height: 80vh;
-    overflow-y: auto;
+    max-height: 77vh;
+    overflow-y: hidden;
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -37,7 +37,7 @@
 .popup-content {
     position: relative;
     z-index: 1;
-    min-height: 625px; /* Adjust this as needed */
+    min-height: 600px; /* Adjust this as needed */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -87,6 +87,8 @@
     word-spacing: 4ch;
     align-items: center;
     text-align: center;
+    position: relative;
+    top: -20px;
 }
 
 .links a {
@@ -98,6 +100,8 @@
     margin-top: auto;
     text-align: center;
     cursor: pointer;
+    position: relative;
+    top: -40px;
 }
 
 .popup-close {

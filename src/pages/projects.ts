@@ -1,7 +1,6 @@
 const mainContent: string = `
     <link rel="stylesheet" href="/styles/projects.css" />
     <div class="popup-wrapper">
-    <div class="popup-bg"></div>
     <div class="popup-content">
         <h2 class="popup-title">Projects</h2>
 
