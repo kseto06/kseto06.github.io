@@ -97,23 +97,55 @@ function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElement, pro
     } else if (projectId === 'aegis') {
         popupContent.innerHTML = `
             <h2 class="popup-title">Aegis</h2>
-                <p>
-                    In recent years, cycling injuries have increased despite the presence of various safety measures in Toronto. Many of these accidents go unnoticed outside the cycling community. Thus, our team aims to enhance safety by improving driver awareness. 
-                    <br>
-                    <br>
-                    To better understand the challenges cyclists face, we spoke to Jun Nogami, a lead organizer from Advocacy for Respect for Cyclists (ARC). For context, ARC is a Toronto-based advocacy group dedicated to promoting the safety, rights and respect of cyclists. Through initiatives such as ghost bike memorials, driver awareness campaigns, and collaborations with other cycling coalitions, ARC works to reduce cycling accidents in Toronto. 
-                    <br>
-                    <br>
-                    The primary stakeholders are cyclists and motorized vehicles who are directly impacted by right-hook collisions. Secondary stakeholders include cycling coalitions, families of cyclists, pedestrians, government officials, and our team. Discussions with ARC and research on the cycling data and experiences in Toronto and the Greater Toronto Area helped us define the key requirements for the ideal solution. 
-                    <br>
-                    <br>
-                    The need is to keep cyclists safe by increasing driver awareness in hopes of preventing right-hook collisions. The implementation of the solution is not restricted strictly to motorized vehicles or bikes. An effective solution must adhere to the three high-level objectives: safety, legality, and accessibility. 
-                    <br>
-                    <br>
-                    Current existing solutions range from bike accessories (namely rearview mirrors on bike handlebars, tail lights with cameras attached, and pool noodle attachments) and car features (such as blind spot detectors and Tesla’s computer vision), to infrastructure (like Dutch-style intersections). These designs enhance cycling safety by increasing cyclists' awareness, which opposes the goal of raising driver's attention as cyclists are the most vulnerable in the shared road space. The existing solutions lack the focus on increasing driver awareness, hence alternative solutions framed by the requirements included in the RFP are required. 
-                </p>
+
+            <h3 style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
+                A Design for Right-Hook Collision Detection and Prevention Systems for Praxis II Design Project
+            </h3><h5 style="display: inline-block; color: #3b3b3b; margin-bottom: 0;">
+                Kaden Seto, Kimmy Tran, Oscar Liang, Sarah Wang
+            </h5>
+
+            <br>
+
+            <a href="https://github.com/kseto06/Aegis" target="_blank" style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
+                <span style="display: inline; margin: 0;">Github</span>
+            </a><a href="https://docs.google.com/document/d/1bZuDZQIqMYzXFShAqbd3qogVS45IHW4aUAbIcS_Sjrw/edit?usp=sharing" 
+                target="_blank" 
+                style="display: inline-block;">
+                <span style="display: inline; margin: 0;">Request for Proposal (RFP)</span>
+            </a>
+
+            <h3>Summary: </h3>
+            
+            <p>
+                For my Praxis II design project, my Praxis team (me, Kimmy, Oscar, and Sarah) teamed up to address the issue of
+                right-hooking in the City of Toronto. Right-hooking is a common type of cyclist incident that occurs in Toronto and 
+                is one of the major causes of the many yearly cyclist injuries and deaths. Right-hooking occurs when a vehicle fails to 
+                check a passing cyclist in their blindspot while making a right turn, resulting in the vehicle colliding with the cyclist.
+                As avid cyclists, my team and I are always worried about the safety of Toronto cyclists and we wanted to tackle this opportunity.
+                <br><br>
+                <!-- ADD MORE STUFF ON ENG DESIGN AND THE SYSTEM LATER -->
+            </p>
+
+            <div class="popup-close-wrapper">
+                <div class="popup-close">click anywhere to close</div>
+            </div>
         `;
     }
+
+    //Attach back 'click anywhere to close' wrapper
+    window.addEventListener(
+        'click',
+        (evt) => {
+            const target = evt.target as HTMLElement;
+            if (!target.closest('.popup-wrapper')) {
+                wrapper.remove();
+            }
+        },
+        );
+
+        wrapper.querySelector('.popup-close-wrapper')?.addEventListener('click', () => {
+            wrapper.remove();
+    });
 
     const backWrapper = document.createElement('div');
     backWrapper.className = 'popup-back-wrapper';
@@ -126,6 +158,21 @@ function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElement, pro
     backWrapper.querySelector('.popup-close')?.addEventListener('click', (e) => {
         e.stopPropagation();
         wrapper.innerHTML = mainContent;
+
+        //Attach back 'click anywhere to close' wrapper
+        window.addEventListener(
+            'click',
+            (evt) => {
+                const target = evt.target as HTMLElement;
+                if (!target.closest('.popup-wrapper')) {
+                    wrapper.remove();
+                }
+            },
+            );
+
+            wrapper.querySelector('.popup-close-wrapper')?.addEventListener('click', () => {
+                wrapper.remove();
+        });
 
         //Reconstruct the projects
         wrapper.querySelector('.popup-wrapper')?.addEventListener('click', (event) => {
