@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { createProjectPopup } from '../pages/projects';
 import { createAboutMePopup } from '../pages/aboutme';
 import { createExperiencePopup } from '../pages/experience';
+import { createPraxisPopup } from '../pages/praxis';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
@@ -41,7 +42,7 @@ export class ActionHandler {
         composer.addPass(new ShaderPass(GammaCorrectionShader));
 
         // Check for clicks on the meshes
-        window.addEventListener('click', (event) => {
+        window.addEventListener('click', async (event) => {
             this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -57,12 +58,14 @@ export class ActionHandler {
                 if (label) {
                     var page: HTMLElement | null = document.getElementById(label);
                     if (!page) {
-                        page = createProjectPopup(); //Default: projects
+                        page = await createProjectPopup(); //Default: projects
 
                         if (label === "about me") {
-                            page = createAboutMePopup();
+                            page = await createAboutMePopup();
                         } else if (label === "experience") {
-                            page = createExperiencePopup();
+                            page = await createExperiencePopup();
+                        } else if (label === "portfolio") {
+                            page = await createPraxisPopup();
                         }
 
                         document.body.appendChild(page);

@@ -1,10 +1,14 @@
+/*
+    Praxis portfolio page
+*/
+
 var mainContent: string = '';
 
 (async () => {
-    mainContent = await fetch('/pages/projects.html').then(res => res.text());
+    mainContent = await fetch('/pages/praxis.html').then(res => res.text());
 })();
 
-export async function createProjectPopup(): Promise<HTMLElement> {
+export async function createPraxisPopup(): Promise<HTMLElement> {
     const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.id = "projects";
     wrapper.innerHTML = mainContent;

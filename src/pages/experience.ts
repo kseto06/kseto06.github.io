@@ -3,28 +3,11 @@ import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 
 const resumeFileName: string = "SetoKadenResumeJan2025";
 
-const mainContent: string = `
-<link rel="stylesheet" href="/styles/experience.css" />
-<div class="resume-popup-overlay">
-    <div class="resume-popup-box">
-        <div class="popup-close-wrapper">
-            <div class="popup-close">click anywhere to close</div>
-        </div>
-
-        <a href="/files/${resumeFileName}.pdf" target="_blank" class="pdf-link">
-            <div class="click-label">
-                click on the page for the pdf :D
-                <br>
-                last updated: jan. 2025
-            </div>
-            <div id="pdf-container" class="pdf-container"></div>
-        </a>
-    </div>
-</div>
-`;
-
-
-export function createExperiencePopup(): HTMLElement {
+export async function createExperiencePopup(): Promise<HTMLElement> {
+    const mainContent: string = await fetch('/pages/experience.html')
+        .then(res => res.text())
+        .then(text => text.replace("{{RESUME_FILE}}", resumeFileName));
+    
     const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.id = "aboutme";
     wrapper.innerHTML = mainContent;

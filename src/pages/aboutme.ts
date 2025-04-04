@@ -1,56 +1,6 @@
-const mainContent: string = `
+export async function createAboutMePopup(): Promise<HTMLElement> {
+    const mainContent: string = await fetch('/pages/aboutme.html').then(res => res.text());
 
-<link rel="stylesheet" href="/styles/aboutme.css" />
-
-    <div class="popup-wrapper">
-    <div class="popup-bg"></div>
-    <div class="popup-content">
-        <h2 class="popup-title">About Me</h2>
-
-        <div class="aboutme" name="About Me">
-            <div class="content">
-                <div class="desc">
-                    I'm a first-year Engineering Science student at University of Toronto. 
-                    I'm a creative programmer with a passion for exploring computer science & programming, and I'm super passionate about machine learning and AI. 
-                    I'm currently a Reinforcement Learning Academic Lead Developer in UofT's Machine Intelligence Team (UTMIST), 
-                    <a href="https://utmist.gitlab.io/" target="_blank">UofT's largest undergraduate machine learning team</a>, 
-                    where I led a development team to develop 
-                    <a href="https://colab.research.google.com/drive/1V184vtHSagN13L0SbWGmnY-jCDvIefmm?usp=sharing" target="_blank">UTMIST's first-ever tournament</a> 
-                    and subsequently produced a 
-                    <a href="https://drive.google.com/file/d/1G0hatGPBXvh2j5byjfrqKBthknNOt5sp/view?usp=sharing" target="_blank">technical paper</a>, submitted to CUCAI & IEEE. 
-                    Previously, I served as the Lead Programmer for my 
-                    <a href="https://titansrobotics.odoo.com/" target="_blank">high school's Robotics Team</a> 
-                    and as a Backend Developer for my 
-                    <a href="https://app.staugustinechs.ca/" target="_blank">high school's App Development Team</a>.
-                </div>
-            </div>
-
-            <img src="/images/personal-picture.png" alt="About Me"/>
-
-            <div class="links">
-                <a href="https://www.linkedin.com/in/kaden-seto/" target="_blank">
-                    <img src="/images/logos/linkedin.png" alt="linkedin" style="width: 48px; height: 48px;"/>
-                </a>
-                <a href="https://github.com/kseto06" target="_blank">
-                    <img src="/images/logos/github.png" alt="github" style="width: 34px; height: 34px; position: relative; top: -8px;"/>
-                </a>  
-                <a href="mailto:kaden.seto@mail.utoronto.ca" target="_blank">
-                    <img src="/images/logos/email.png" alt="email" style="width: 48px; height: 48px;"/>
-                </a>
-                <a href="https://github.com/kseto06/website" target="_blank">
-                    <img src="/images/logos/div.png" alt="website" style="width: 48px; height: 48px; position: relative; left: -7px;"/>
-                </a>
-            </div>
-        </div>
-
-        <div class="popup-close-wrapper">
-            <div class="popup-close">click anywhere to close</div>
-        </div>
-
-    </div>
-`;
-
-export function createAboutMePopup(): HTMLElement {
     const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.id = "aboutme";
     wrapper.innerHTML = mainContent;
