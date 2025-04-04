@@ -1,33 +1,134 @@
 <h2 class="popup-title">Aegis</h2>
 
-<h3 style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
-    A Design for Right-Hook Collision Detection and Prevention Systems for Praxis II Design Project
-</h3><h5 style="display: inline-block; color: #3b3b3b; margin-bottom: 0;">
-    Kaden Seto, Kimmy Tran, Oscar Liang, Sarah Wang
-</h5>
+    <h3 style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
+        A Design for a Right-Hook Collision Detection and Prevention System
+    </h3><h5 style="display: inline-block; color: #3b3b3b; margin-bottom: 0;">
+        Kaden Seto, Kimmy Tran, Oscar Liang, Sarah Wang
+    </h5>
 
-<br>
+    <br>
 
-<a href="https://github.com/kseto06/Aegis" target="_blank" style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
-    <span style="display: inline; margin: 0;">Github</span>
-</a><a href="https://docs.google.com/document/d/1bZuDZQIqMYzXFShAqbd3qogVS45IHW4aUAbIcS_Sjrw/edit?usp=sharing" 
-    target="_blank" 
-    style="display: inline-block;">
-    <span style="display: inline; margin: 0;">Request for Proposal (RFP)</span>
-</a>
+    <a href="https://github.com/kseto06/Aegis" target="_blank" style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
+        <span style="display: inline; margin: 0;">Github</span>
+    </a><a href="https://docs.google.com/document/d/1bZuDZQIqMYzXFShAqbd3qogVS45IHW4aUAbIcS_Sjrw/edit?usp=sharing" 
+        target="_blank" 
+        style="display: inline-block;">
+        <span style="display: inline; margin: 0;">Request for Proposal (RFP)</span>
+    </a>
 
-<h3>Summary: </h3>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="/gifs/aegis-compressed.gif" alt="Aegis System Demo" style="max-width: 90%; height: auto;">
+    </div>
 
-<p>
-    For my Praxis II design project, my Praxis team (me, Kimmy, Oscar, and Sarah) teamed up to address the issue of
-    right-hooking in the City of Toronto. Right-hooking is a common type of cyclist incident that occurs in Toronto and 
-    is one of the major causes of the many yearly cyclist injuries and deaths. Right-hooking occurs when a vehicle fails to 
-    check a passing cyclist in their blindspot while making a right turn, resulting in the vehicle colliding with the cyclist.
-    As avid cyclists, my team and I are always worried about the safety of Toronto cyclists and we wanted to tackle this opportunity.
-    <br><br>
-    <!-- ADD MORE STUFF ON ENG DESIGN AND THE SYSTEM LATER -->
-</p>
+    <h3>Summary: </h3>
 
-<div class="popup-close-wrapper">
-    <div class="popup-close">click anywhere to close</div>
+    <p>
+        For my Praxis II design project, my Praxis team (me, Kimmy, Oscar, and Sarah) teamed up to address the issue of
+        right-hooking in the City of Toronto. Right-hooking is a common type of cyclist incident that occurs in Toronto and 
+        is one of the major causes of the many yearly cyclist injuries and deaths. Right-hooking occurs when a vehicle fails to 
+        check a passing cyclist in their blindspot while making a right turn, resulting in the vehicle colliding with the cyclist.
+        As avid cyclists, my team and I are always worried about the safety of Toronto cyclists and we wanted to tackle this opportunity.
+        <br><br>
+        In this project, we combined engineering design concepts, machine intelligence, electrical engineering,
+        and classical mechanics to develop an infrastructure-based cyclist detection camera system with 
+        light activation that aims to alert drivers of incoming cyclists in their blindspot. This project 
+        depended heavily on our knowledge and application of the FDCR model in order to create a high-quality,
+        feasible solution that would fit the needs of the Toronto cycling community. We communicated heavily
+        with the leader (Jun Nogami) of the Advocacy for Respect for Cyclists (ARC) group and had to constantly rescope and 
+        reframe our community, designs, and requirements in order to create a design that benefits cyclists and also
+        can be easily implemented on top of current infrastructure in Toronto.
+    </p>
+    <h4><b><u>Timeline: </u></b></h4>
+    
+    <div class="flowchart" style="bottom: 45px">
+        <div class="node" style="top: 65px;">
+            <strong>Framing:</strong>
+            <ul>
+                <li>Community Profile</li>
+                <li>Request for Proposal (RFP)</li>
+            </ul>
+        </div>
+        <div class="arrow" style="top: 60px;">→</div>
+        <div class="node" style="top: 70px;">
+            <strong>Diverging:</strong>
+            <ul>
+                <li>Beta Release</li>
+                <li>Prototype Development</li>
+            </ul>
+        </div>
+        <div class="tree">
+            <div class="vertical-connections">
+                <div class="row">
+                    <span class="arrow" style="right: 17px; top: 20px">↗</span>
+                        <div class="node" style="right: 17px; top: 20px">Ekkos (Sound)</div>
+
+                </div>
+                <div class="row">
+                    <span class="arrow">→</span>
+                        <div class="node">Sensio (Arduino)</div>
+                    <span class="arrow">→</span>
+                </div>
+                <div class="row">
+                    <span class="arrow" style="right: 6px; bottom: 20px">↘</span>
+                        <div class="node" style="right: 3px; bottom: 60px">Aegis (Camera)</div>
+                    <span class="arrow" style="right: 1px; bottom: 20px">↗</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="node" style="top: 70px;">
+            <strong>Converging:</strong>
+            <ul>
+                <li>Testing & Verification</li>
+                <li>Combining Prototypes</li>
+            </ul>
+        </div>
+        <div class="arrow" style="top: 60px;">→</div>
+        <div class="node" style="top: 85px;">
+            <strong>FINAL DESIGN: Aegisv2 (Camera + Arduino Lights)</strong>
+        </div>
+    </div>
+    <p>
+        We initially framed our opportunity through meeting our community (ARC) to discuss their lived 
+        experiences, challenges, and their needs and objectives. We learned that Nogami (leader of ARC) organizes
+        ghost bike memorials to honour the lives of cyclists who have died in Toronto due to weak law enforcement and lack of driver awareness. 
+        He feels tremendous emotional loss towards the lives of cyclists taken in Toronto, saying, “I remember every single one and every single name”. 
+        Through this, we learnt the direct impact of ARC's organized ghost bike memorials and protests, and we were inspired to tackle 
+        this opportunity to help prevent future deaths of cyclists in Toronto, specifically in right-hooking incidents.
+        <!--Add reference for ARC-->
+        <br>
+        In our Request for Proposal (RFP), we did further research into right-hooking incidents, stakeholders, and reference designs
+        to design a detection system that would be able to effectively detect and warn vehicles of incoming cyclists. Through research 
+        and rigorous classical mechanics calculations, we were able to design requirements and objectives that determined the required 
+        distance and time to be kept between the bike and the car in order to have both objects stop in time to prevent a right-hooking collision.
+        Reference designs such as existing blind spot sensors and car horns helped us diverge potential detection and alertion systems for 
+        our final design. I was most involved in modeling the system and doing the physics calculations to define the requirements and objectives 
+        for our Requirements Framework, where I was able to apply the knowledge that I learnt in PHY180 Classical Mechanics
+        to model real-life physics scenarios.
+        <!--Add reference for reference design. We can talk about reference designs as a CTMF here-->
+        <br><br>
+        In the diverging stage, we diverged to three main designs using various diverging tools,
+        most notably Lotus Blossom and Biomimicry. We developed Aegis (camera detection system), 
+        Sensio (Arduino flagpole system), and Ekko (car horn sound system) as ways to detect and alert
+        vehicles of incoming cyclists. Our approach to these designs were very different, with each 
+        design touching on different aspects and types of engineering. I was mainly involved in developing
+        Aegis, where I applied my knowledge of machine intelligence in computer vision to train a cyclist 
+        detection model using YOLOv11 with transfer learning, and also explored developing fast-inference super resolution GAN models (SRGAN)
+        to help with image quality upscaling for detection. The model achieves high precision values (mAP75 ~ 95%) and was able to accurately and quickly 
+        detect cyclists for edge-detection (2.7ms inference times) during our validation tests. 
+        <!--Add images-->
+        <br><br>
+        Upon our final meeting with the community and getting our final piece of feedback from Nogami, we learnt that designs
+        implementing small-scale infrastructure changes are most desirable because it is hard to force/convince drivers and cyclists to 
+        implement a solution on their own vehicles and bikes, and large-scale infrastructure changes take a long time to be implemented. 
+        With this in mind, we converged to an upgraded version of Aegis, which combines Aegis detection system, and Sensio's Arduino lights to create an 
+        alerting system attached beside traffic lights. The goal of the final design is to detect incoming cyclists in the bike lane and 
+        use flashing lights to indicate to drivers that there is a cyclist in their blindspot to prevent the potential right-hook collision.
+        <!--Show GIFS of tested detection-->
+    </p>
+
+    <div class="popup-close-wrapper" style="top: -20px;">
+        <div class="popup-close">click anywhere to close</div>
+    </div>
+
 </div>
