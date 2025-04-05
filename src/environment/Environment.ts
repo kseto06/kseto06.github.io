@@ -17,6 +17,7 @@ export default class Environment {
 
     private petals: THREE.Object3D[] = [];
     private loader: GLTFLoader  = new GLTFLoader(manager);
+    private listener: THREE.AudioListener;
 
     constructor(container: HTMLElement) {
         // Scene setup
@@ -41,6 +42,48 @@ export default class Environment {
 
         //Effect composer
         this.composer = new EffectComposer(this.renderer);
+
+        //Music
+        this.listener = new THREE.AudioListener();
+        this.camera.add(this.listener);
+
+        const audio = new THREE.Audio(this.listener);
+        const audioLoader = new THREE.AudioLoader(manager);
+        audioLoader.load('/music/way_of_the_ghost.mp3', (buffer) => {
+            audio.setBuffer(buffer);
+            audio.setLoop(true);
+            audio.setVolume(0.5);
+            try {
+                audio.play();
+            } catch (e) {
+                console.error('Audio play failed:', e);
+            }
+        });
+
+        window.addEventListener('click', async () => {
+            if (THREE.AudioContext.getContext().state === 'suspended') {
+                try {
+                    await THREE.AudioContext.getContext().resume();
+                } catch (e) {
+                    console.error('Audio context resume failed:', e);
+                }
+            }
+
+            if (!audio.isPlaying && audio.buffer) {
+                audio.play();
+            }
+        });
+
+        const muteButton = document.getElementById('mute-button') as HTMLButtonElement;
+        const muteIcon = document.getElementById('mute-icon') as HTMLImageElement;
+
+        if (muteButton && muteIcon) {
+            muteButton.addEventListener('click', () => {
+                const isMuted = audio.getVolume() === 0;
+                audio.setVolume(isMuted ? 0.5 : 0);
+                muteIcon.src = isMuted ? '/music/icons/unmute.png' : '/music/icons/mute.png';
+            });
+        }
 
         this.loadEnv();
 

@@ -38,7 +38,7 @@
         reframe our community, designs, and requirements in order to create a design that benefits cyclists and also
         can be easily implemented on top of current infrastructure in Toronto.
     </p>
-    <h4><b><u>Timeline: </u></b></h4>
+    <h4><b>Timeline: </b></h4>
     
     <div class="flowchart" style="bottom: 45px">
         <div class="node" style="top: 65px;">
@@ -59,8 +59,8 @@
         <div class="tree">
             <div class="vertical-connections">
                 <div class="row">
-                    <span class="arrow" style="right: 17px; top: 20px">↗</span>
-                        <div class="node" style="right: 17px; top: 20px">Ekkos (Sound)</div>
+                    <span class="arrow" style="right: 10px; top: 20px">↗</span>
+                        <div class="node" style="right: 10px; top: 20px">Ekkos (Sound)</div>
 
                 </div>
                 <div class="row">
@@ -97,6 +97,11 @@
         this opportunity to help prevent future deaths of cyclists in Toronto, specifically in right-hooking incidents.
         <!--Add reference for ARC-->
         <br>
+        <div style="text-align: center;">
+            <img src="/images/aegis/ghost-bike.jpg" alt="Ghost Bike" style="max-width: 40%; height: auto;">
+        </div>
+        
+        <br>
         In our Request for Proposal (RFP), we did further research into right-hooking incidents, stakeholders, and reference designs
         to design a detection system that would be able to effectively detect and warn vehicles of incoming cyclists. Through research 
         and rigorous classical mechanics calculations, we were able to design requirements and objectives that determined the required 
@@ -107,6 +112,11 @@
         to model real-life physics scenarios.
         <!--Add reference for reference design. We can talk about reference designs as a CTMF here-->
         <br><br>
+        <div style="text-align: center;">
+            <img src="/images/aegis/car-bike-calculation.png" alt="calculation" style="max-width: 40%; height: auto;">
+        </div>
+
+        <br>
         In the diverging stage, we diverged to three main designs using various diverging tools,
         most notably Lotus Blossom and Biomimicry. We developed Aegis (camera detection system), 
         Sensio (Arduino flagpole system), and Ekko (car horn sound system) as ways to detect and alert
@@ -118,6 +128,12 @@
         detect cyclists for edge-detection (2.7ms inference times) during our validation tests. 
         <!--Add images-->
         <br><br>
+        <div style="text-align: center;">
+            <img src="/images/aegis/aegis-testing.png" alt="Aegis Testing img" style="max-width: 60%; height: auto;">
+            <img src="/gifs/test4.gif" alt="Aegis Testing gif" style="max-width: 22.5%; height: auto;">
+        </div>
+        
+        <br>
         Upon our final meeting with the community and getting our final piece of feedback from Nogami, we learnt that designs
         implementing small-scale infrastructure changes are most desirable because it is hard to force/convince drivers and cyclists to 
         implement a solution on their own vehicles and bikes, and large-scale infrastructure changes take a long time to be implemented. 
@@ -127,8 +143,54 @@
         <!--Show GIFS of tested detection-->
     </p>
 
-    <div class="popup-close-wrapper" style="top: -20px;">
-        <div class="popup-close">click anywhere to close</div>
+    <h3>CTMFs: </h3>
+
+    <h4>Framing Concept/Tool: Reference Designs </h4>
+    <p>
+        In this project, when it came to framing, we used a large variety of reference designs for current detection and activation systems
+        to help us define feasible, reliable, and high-level concrete objectives for possible designs. For example, the main source of
+        inspiration behind Aegis and Sensio came from existing reference designs that we researched, such
+        as the universal blind spot assist systems on cars, and the blind spot cameras and detection systems on the Tesla Model 3.
+        <br>
+        With these reference designs, we were able to design prototypes that adapts these existing designs into 
+        systems that would solve the issue presented in our opporutnity. Additionally, we were also able to
+        effectively use these reference designs to diverge designs that work on their current issues.
+        for example, the Tesla Model 3's blind spot detection system is sometimes unreliable and is very expensive,
+        and Blind Spot Assist systems are not effective in detecting small-bodies such as cyclists, so Aegis attempts to 
+        work on both of these pitfalls by using a detection system that works on a small, affordable webcam camera.
+        <br>
+        Reference designs were very prominent in our project, and they taught me how taking past designs and adapting them to
+        solve framed issues is very helpful in efficiently diverging designs and solutions. 
+    </p>
+    <div style="text-align: center;">
+        <img src="/images/aegis/ref-designs.png" alt="Reference Designs" style="max-width: 40%; height: auto;">
+    </div>
+    <h4>Diverging Tool: Lotus Blossom </h4>
+    <p>
+        In the diverging stage of our project, we used the Lotus Blossom to help us diverge various designs and ideas. Starting from a central goal
+        of improving driver awareness, we were able to branch out and diverge into Sound, Sight, and Touch categories to appeal to human senses which
+        we felt would best increase driver awareness. Lotus blossom allowed us to diverge into various solution spaces and design ideas which all met our 
+        defined requirements. This allowed us to explore many ideas that we would not have thought of if we had only used basic brainstorming and mind-mapping.
+    </p>
+    <div style="position: relative; text-align: center; top:-30px;">
+        <img src="/images/aegis/lotus-blossom.png" alt="Lotus Blossom" style="max-width: 40%; height: auto; transform: rotate(90deg);">
+    </div>
+    <div style="position: relative; top: -50px;">
+        <h4>Diverging Tool: Biomimicry</h4>
+        <p>
+            The diverging stage of this project also heavily depended on our use of biomimicry. In particular, we used biomimicry 
+            to help us diverge more design ideas using the three senses that we diverged to in Lotus Blossom, mainly focusing on 
+            animals and entities in nature that exert these effects. For example, Ekko was inspired by howling wolves and sound-amplifying seashells,
+            Sensio was inspired by ultrasonic sensors and detection in dolphins and bats, and Aegis was inspired by the wide-range vision in frogs.
+            Overall, I learned that biomimicry was an effective tool in diverging, and was also effective in refining ideas generated in Lotus Blossom.
+        </p>
+    </div>
+    <div style="position: relative; text-align: center; top: -60px;">
+        <img src="/images/aegis/biomimicry.png" alt="Lotus Blossom" style="max-width: 60%; height: auto;">
+    </div>
+
+    <div class="popup-close-wrapper">
+        <div class="popup-close" style="position: relative; top: -30px;">click anywhere to close</div>
     </div>
 
 </div>
