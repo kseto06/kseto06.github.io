@@ -75,6 +75,14 @@
     margin-bottom: 1.5rem;
 }
 
+.popup-subtitle {
+    position: relative;
+    font-size: 1.45rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    top: -1.5rem;
+}
+
 .project {
     display: flex;
     align-items: flex-start;

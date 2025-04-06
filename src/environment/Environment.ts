@@ -18,6 +18,20 @@ export default class Environment {
     private petals: THREE.Object3D[] = [];
     private loader: GLTFLoader  = new GLTFLoader(manager);
     private listener: THREE.AudioListener;
+    private audio: THREE.Audio;
+    private audioLoader: THREE.AudioLoader;
+
+    private playlist: string[] = [
+        '/music/shooting_stars_in_summer.mp3',
+        '/music/way_of_the_ghost.mp3',
+    ];
+    private playlistNames: string[] = [
+        'Shooting Stars in Summer - Naoko Ikeda',
+        'Way of the Ghost - Ilan Eshkeri',
+    ];
+
+    private currentTrack: number = 0;
+    private isMuted: boolean = false;
 
     constructor(container: HTMLElement) {
         // Scene setup
@@ -47,18 +61,8 @@ export default class Environment {
         this.listener = new THREE.AudioListener();
         this.camera.add(this.listener);
 
-        const audio = new THREE.Audio(this.listener);
-        const audioLoader = new THREE.AudioLoader(manager);
-        audioLoader.load('/music/way_of_the_ghost.mp3', (buffer) => {
-            audio.setBuffer(buffer);
-            audio.setLoop(true);
-            audio.setVolume(0.5);
-            try {
-                audio.play();
-            } catch (e) {
-                console.error('Audio play failed:', e);
-            }
-        });
+        this.audio = new THREE.Audio(this.listener);
+        this.audioLoader = new THREE.AudioLoader(manager);
 
         window.addEventListener('click', async () => {
             if (THREE.AudioContext.getContext().state === 'suspended') {
@@ -69,24 +73,49 @@ export default class Environment {
                 }
             }
 
-            if (!audio.isPlaying && audio.buffer) {
-                audio.play();
+            if (!this.audio.isPlaying && this.audio.buffer && !this.isMuted) {
+                this.audio.play();
             }
         });
+
+        this.audio.onEnded = () => {
+            // Cyclic indexing
+            if (this.currentTrack == this.playlist.length - 1) {
+                this.currentTrack = 0;
+            }
+            this.currentTrack = (this.currentTrack + 1) % this.playlist.length;
+            this.playTrack(this.currentTrack);
+        };
 
         const muteButton = document.getElementById('mute-button') as HTMLButtonElement;
         const muteIcon = document.getElementById('mute-icon') as HTMLImageElement;
 
         if (muteButton && muteIcon) {
             muteButton.addEventListener('click', () => {
-                const isMuted = audio.getVolume() === 0;
-                audio.setVolume(isMuted ? 0.5 : 0);
-                muteIcon.src = isMuted ? '/music/icons/unmute.png' : '/music/icons/mute.png';
+                this.isMuted = !this.isMuted;
+                this.audio.setVolume(this.isMuted ? 0 : 0.3);
+                muteIcon.src = this.isMuted ? '/music/icons/mute.png' : '/music/icons/unmute.png';
+                this.audio.pause();
+
+                //Text unmuting edge case
+                const textOverlay: HTMLElement | null = document.getElementById('overlay-text');
+                if (textOverlay && !this.isMuted) {
+                    textOverlay.innerHTML = `<p>🎵 ${this.playlistNames[this.currentTrack]}</p>`;
+                }
             });
         }
 
         this.loadEnv();
 
+        if (!this.isMuted) {
+            this.playTrack(this.currentTrack);
+
+            //Text
+            const textOverlay: HTMLElement | null = document.getElementById('overlay-text');
+            if (textOverlay && !this.isMuted) {
+                textOverlay.innerHTML = `<p>🎵 ${this.playlistNames[this.currentTrack]}</p>`;
+            }
+        }
         window.addEventListener('resize', this.handleResize.bind(this));
         this.actionHandler = new ActionHandler(this.scene, this.camera, this.composer); //Action controller
     }
@@ -412,6 +441,29 @@ export default class Environment {
             if ((child as THREE.Mesh).isMesh) {
                 child.castShadow = true;
                 child.receiveShadow = true;
+            }
+        });
+    }
+
+    private playTrack(idx: number): void {
+        this.audioLoader.load(this.playlist[idx], (buffer) => {
+            this.audio.stop();
+            this.audio.setBuffer(buffer);
+            this.audio.setLoop(false);
+            this.audio.setVolume(0.3);
+
+            //Text
+            const textOverlay: HTMLElement | null = document.getElementById('overlay-text');
+            if (textOverlay && !this.isMuted) {
+                textOverlay.innerHTML = `<p>🎵 ${this.playlistNames[idx]}</p>`;
+            }
+
+            if (!this.isMuted) {
+                try {
+                    this.audio.play();
+                } catch (e) {
+                    console.error('Audio play failed:', e);
+                }
             }
         });
     }

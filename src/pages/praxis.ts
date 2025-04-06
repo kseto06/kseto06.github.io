@@ -50,11 +50,12 @@ export async function createPraxisPopup(): Promise<HTMLElement> {
 
 async function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElement, projectId: string | null): Promise<void> {
     //Project HTMLs
-    if (projectId === 'aisquared') {
-        popupContent.innerHTML = await fetch('/pages/popups/aisquared.html').then(res => res.text());
-
-    } else if (projectId === 'aegis') {
+    if (projectId === 'aegis') {
         popupContent.innerHTML = await fetch('/pages/popups/aegis.html').then(res => res.text());
+    } else if (projectId === 'civbridge') {
+        popupContent.innerHTML = await fetch('/pages/popups/civ.html').then(res => res.text());
+    } else if (projectId === 'sleep') {
+        popupContent.innerHTML = await fetch('/pages/popups/sleep.html').then(res => res.text());
     }
 
     //Attach back 'click anywhere to close' wrapper
