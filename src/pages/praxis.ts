@@ -56,6 +56,8 @@ async function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElemen
         popupContent.innerHTML = await fetch('/pages/popups/civ.html').then(res => res.text());
     } else if (projectId === 'pulleyhat') {
         popupContent.innerHTML = await fetch('/pages/popups/pulleyhat.html').then(res => res.text());
+    } else if (projectId === 'position') {
+        popupContent.innerHTML = await fetch('/pages/popups/position.html').then(res => res.text());
     }
 
     //Attach back 'click anywhere to close' wrapper
