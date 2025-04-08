@@ -54,8 +54,8 @@ async function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElemen
         popupContent.innerHTML = await fetch('/pages/popups/aegis.html').then(res => res.text());
     } else if (projectId === 'civbridge') {
         popupContent.innerHTML = await fetch('/pages/popups/civ.html').then(res => res.text());
-    } else if (projectId === 'sleep') {
-        popupContent.innerHTML = await fetch('/pages/popups/sleep.html').then(res => res.text());
+    } else if (projectId === 'pulleyhat') {
+        popupContent.innerHTML = await fetch('/pages/popups/pulleyhat.html').then(res => res.text());
     }
 
     //Attach back 'click anywhere to close' wrapper
