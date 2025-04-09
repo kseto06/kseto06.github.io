@@ -20,6 +20,7 @@ export default class Environment {
     private listener: THREE.AudioListener;
     private audio: THREE.Audio;
     private audioLoader: THREE.AudioLoader;
+    private websiteEntered: boolean = false;
 
     private playlist: string[] = [
         '/music/shooting_stars_in_summer.mp3',
@@ -73,7 +74,10 @@ export default class Environment {
                 }
             }
 
-            if (!this.audio.isPlaying && this.audio.buffer && !this.isMuted) {
+            if (!this.websiteEntered) {
+                this.websiteEntered = true;
+                this.playTrack(this.currentTrack);
+            } else if (!this.audio.isPlaying && this.audio.buffer && !this.isMuted) {
                 this.audio.play();
             }
         });
@@ -108,7 +112,7 @@ export default class Environment {
         this.loadEnv();
 
         if (!this.isMuted) {
-            this.playTrack(this.currentTrack);
+            // this.playTrack(this.currentTrack);
 
             //Text
             const textOverlay: HTMLElement | null = document.getElementById('overlay-text');
@@ -458,9 +462,9 @@ export default class Environment {
                 textOverlay.innerHTML = `<p>🎵 ${this.playlistNames[idx]}</p>`;
             }
 
-            if (!this.isMuted) {
+            if (!this.isMuted && this.audio.context.state !== 'suspended') {
                 try {
-                    this.audio.play();
+                   this.audio.play();
                 } catch (e) {
                     console.error('Audio play failed:', e);
                 }

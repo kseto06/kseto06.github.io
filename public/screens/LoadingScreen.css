@@ -22,3 +22,28 @@
     opacity: 0;
     pointer-events: none;
 }
+
+.text {
+    position: relative;
+    height: 2rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.enter-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 1.25rem;
+    font-family: "Yuji Boku", serif;
+    font-weight: 400;
+    opacity: 1;
+    text-align: center;
+    transition: opacity 1s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

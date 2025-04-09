@@ -18,7 +18,14 @@
   </head>
   <body>
     <div id="loading-screen">
-      <span>Kaden Seto</span>
+      <div class="loading-content">
+        <span>Kaden Seto</span>
+
+        <div class="text">
+          <p id="loading-text" class="enter-text">loading assets...</p>
+          <p id="enter-text" class="enter-text hidden">click anywhere to enter</p>
+        </div> 
+      </div>
     </div>
 
     <div id="gui-overlay">
@@ -28,7 +35,7 @@
     </div>
 
     <div id="overlay-text">
-      <p></p>
+      <p></p> <!-- NOTE: Empty on init -- populated later when song plays -->
     </div>
 
     <script type="module" src="/src/main.ts"></script>
