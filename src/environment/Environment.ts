@@ -84,9 +84,6 @@ export default class Environment {
 
         this.audio.onEnded = () => {
             // Cyclic indexing
-            if (this.currentTrack == this.playlist.length - 1) {
-                this.currentTrack = 0;
-            }
             this.currentTrack = (this.currentTrack + 1) % this.playlist.length;
             this.playTrack(this.currentTrack);
         };
@@ -112,8 +109,6 @@ export default class Environment {
         this.loadEnv();
 
         if (!this.isMuted) {
-            // this.playTrack(this.currentTrack);
-
             //Text
             const textOverlay: HTMLElement | null = document.getElementById('overlay-text');
             if (textOverlay && !this.isMuted) {
