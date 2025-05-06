@@ -71,7 +71,7 @@
 .popup-title {
     font-size: 1.75rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .aboutme {
@@ -84,8 +84,8 @@
 }
 
 .aboutme img {
-    width: 200px;
-    height: 200px;
+    width: 170px;
+    height: 170px;
     object-fit: cover;
     border-radius: 50%;
     margin-top: 1rem;
@@ -126,7 +126,7 @@
     text-align: center;
     cursor: pointer;
     position: relative;
-    top: -40px;
+    bottom: 40px;
 }
 
 .popup-close {
@@ -135,4 +135,6 @@
     margin-top: 1.5rem;
     text-align: center;
     cursor: pointer;
+    position: relative;
+    bottom: 40px;
 }

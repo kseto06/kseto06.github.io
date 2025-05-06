@@ -144,6 +144,19 @@
     height: 90px;
     object-fit: cover;
     border-radius: 0.5rem;
+    display: block;
+}
+
+.project .gif-hover {
+    display: none;
+}
+
+.project:hover .default-img {
+    display: none;
+}
+
+.project:hover .gif-hover {
+    display: block;
 }
   
 .project-content {
