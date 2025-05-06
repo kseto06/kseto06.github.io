@@ -1,0 +1,140 @@
+@font-face {
+    font-family: 'MaruMinya';
+    src: url('/fonts/MaruMinya.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.popup-wrapper {
+    font-family: 'MaruMinya';
+    position: fixed;
+    overflow: hidden;
+    top: 5vh;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    z-index: 9999;
+    pointer-events: auto;
+    isolation: isolate;
+}
+
+.popup-wrapper::before {
+    content: '';
+    position: fixed;
+    top: 5vh;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    box-sizing: border-box;
+    background-image: url('/images/calligraphy.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 0.5rem;
+}
+
+/* Hiding scrollbar: */
+.popup-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.popup-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.popup-content {
+    position: relative;
+    z-index: 1;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.popup-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.aboutme {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.aboutme img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 1rem;
+}
+
+.content {
+    flex-grow: 0.5;
+}
+
+.title {
+    font-family: 'MaruMinya', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.desc {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.2;
+}
+
+.links {
+    font-size: 1.1rem;
+    word-spacing: 4ch;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: -20px;
+}
+
+.links a {
+    text-decoration: none;
+}
+
+.popup-close-wrapper {
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    bottom: 40px;
+}
+
+.popup-close {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    bottom: 40px;
+}

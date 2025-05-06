@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" type="image/png" href="/images/logos/K.png?v=2" />
+    <link rel="stylesheet" href="screens/LoadingScreen.css" />
+    <link rel="stylesheet" href="styles/index.css" />
     <meta charset="UTF-8" />
     <title>Kaden Seto</title>
     <style>
@@ -12,8 +15,29 @@
         display: block;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-BnjS9T4V.js"></script>
+    <script type="module" crossorigin src="/assets/index-C3xW1Sh6.js"></script>
   </head>
   <body>
+    <div id="loading-screen">
+      <div class="loading-content">
+        <span>Kaden Seto</span>
+
+        <div class="text">
+          <p id="loading-text" class="enter-text">loading assets...</p>
+          <p id="enter-text" class="enter-text hidden">click anywhere to enter</p>
+        </div> 
+      </div>
+    </div>
+
+    <div id="gui-overlay">
+      <button id="mute-button" alt="mute/unmute">
+        <img id="mute-icon" src="/music/icons/unmute.png" alt="mute toggle" />
+      </button>
+    </div>
+
+    <div id="overlay-text">
+      <p></p> <!-- NOTE: Empty on init -- populated later when song plays -->
+    </div>
+
   </body>
 </html>

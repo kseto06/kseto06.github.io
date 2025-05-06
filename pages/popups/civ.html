@@ -1,0 +1,187 @@
+<h2 class="popup-title">CIV102 Bridge Project</h2>
+
+    <h3 style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
+        Constructing and designing an optimized matboard bridge to withstand 400+ N loads with applied structural engineering concepts.
+    </h3><h5 style="display: inline-block; color: #3b3b3b; margin-bottom: 0;">
+        Kaden Seto, John Chen, Ryan Qian, Alisha Ali
+    </h5>
+
+    <br>
+
+    <a href="https://github.com/kseto06/civ-bridge" target="_blank" style="display: inline-block; margin-right: 10px; margin-bottom: 0;">
+        <span style="display: inline; margin: 0;">Github</span>
+    </a><a href="/files/CIV102_Design_Report.pdf" 
+        target="_blank" 
+        style="display: inline-block;">
+        <span style="display: inline; margin: 0;">Design Report</span>
+    </a>
+
+    <h3>Summary: </h3>
+
+    <p>
+        For my CIV102 bridge project, my team and I (me, John, Ryan, Alisha) optimized and designed a
+        bridge with the goal of carrying 400+ N point loads. We combined engineering design and applied structural engineering concepts
+        to design, calculate, and build our optimized bridge design. Throughout the project, we applied the FDCR cycle 
+        to frame our objectives for the final bridge product and applied structural engineering concepts to diverge and converge 
+        multiple designs.
+    </p>
+
+    <h4><b>Timeline: </b></h4>
+    
+    <div class="flowchart" style="bottom: 45px">
+        <div class="node" style="top: 65px;">
+            <strong>Framing:</strong>
+            <ul>
+                <li>Initial Deliverable & Calculations</li>
+            </ul>
+        </div>
+        <div class="arrow" style="top: 60px;">→</div>
+        <div class="node" style="top: 60px;">
+            <strong>Diverging:</strong>
+            <ul>
+                <li>Calculations & Optimization</li>
+                <li>Iterative Development</li>
+            </ul>
+        </div>
+        <div class="arrow" style="top: 60px;">→</div>
+        <div class="node" style="top: 65px;">
+            <p>5 Design Iterations</p>
+            <p>...</p>
+        </div>
+        <div class="arrow" style="top: 60px;">→</div>
+        <div class="node" style="top: 50px;">
+            <strong>Converging:</strong>
+            <ul>
+                <li>Measuring dimensions for optimized design based on calculations</li>
+                <li>Building the bridge</li>
+            </ul>
+        </div>
+        <div class="arrow" style="top: 60px;">→</div>
+        <div class="node" style="top: 57px;">
+            <strong>FINAL DESIGN: </strong>
+            <img src="/images/praxis/civ-bridge.png" style="max-width: 100%; height: auto;" alt="civ bridge">
+        </div>
+    </div>
+    <p>
+        To start the project, we made sure to thoroughly understand our given problem statement through completing the initial deliverable assignment. 
+        Although the goal of simply building a bridge to support a load seems simple -- it was quite complicated to frame the problem at hand and define
+        specific requirements and objectives for our bridge. For example, we had limitations on the materials we could use, and there were many structural 
+        engineering problems that we had to consider for the bridge design, such as the bending moment and shear force experienced by the bridge from the point 
+        loads. As such, we had to reframe the problem statement to move more towards <b>iteratively optimizing the bridge design</b> and being able to develop
+        a <b>visualization tool</b> that could help us visualize where the bridge fails in certain areas to help us iteratively improve our design.
+        <br>
+        <div style="text-align: center;">
+            <figure>
+                <img src="/images/praxis//civ/formulas/crit_stress.png" alt="formula" style="max-width: 20%; height: auto;">
+                <img src="/images/praxis/civ/formulas/inertia.png" alt="formula" style="max-width: 25%; height: auto;">
+                <img src="/images/praxis/civ/formulas/comp_stress.png" alt="formula" style="max-width: 20%; height: auto;">
+                <img src="/images/praxis/civ/formulas/crit_shear.png" alt="formula" style="max-width: 25%; height: auto;">
+                <figcaption style="font-size: 0.9em; color: #555;">
+                    Figure 1: 
+                    Formulas used to calculate the critical stress, moment of inertia, compressive stress, and critical shear force experienced by the bridge.
+            </figure>
+        </div>
+        
+        <br>
+        For the diverging process, we took an unconventional approach. Since the bridge was already very complicated to model, especially
+        with multiple types of failures/formulas to keep in mind, we decided not to use usual diverging methods such as Lotus Blossom or Biomimicry to 
+        generate more ideas. Instead, we took an iterative development approach to our design, where we decided to start with a single base design (called "Design Zero" and was provided by the CIV102 Teaching Team),
+        and improve the design with better optimizations through each iteration. In other words, we used the Modify technique of the SCAMPER Model.
+        Through each iteration, we were able to optimize the bridge against each of the stresses presented in the formulas above, thus making the bridge theoretically
+        as strong as possible. Throughout this process, we developed code in MATLAB and Python to help us calculate and visualize the effect that the bridge iterations had to see
+        where the bridge was failing and how we could improve it.
+
+        <div style="text-align: center; margin-top: 20px;">
+            <figure>
+                <img src="/images/praxis/civ/bridge-graphs.png" alt="civ bridge graphs" style="max-width: 95%; height: auto;">
+                <figcaption style="font-size: 0.9em; color: #555;">
+                    Figure 2: 
+                    Graphs generated from the MATLAB code to visualize stresses and forces experienced by the bridge.
+                </figcaption>
+            </figure>
+        </div>
+        
+        <br>
+        On the final iteration, we converged to the design that we felt best optimized our bridge's performance. Because we took a "baseline design" approach
+        to the project, we did not need to use usual converging techniques such as the Pugh Chart or the Pairwise Comparison Matrix to choose on the best design.
+        Instead, we only needed to take our fully optimized design, measure out and cut the matboard pieces, and assemble the bridge.
+        <br>
+        During testing, the bridge was unsuccessful in carrying the 400+ N load, only being able to carry a few objects (~3 N) total before failure. The bridge had buckled 
+        quickly before hand due to insufficient gluing at the center connection point. Additionally, we had cut the bridge in the center, which was a mistake as the bending 
+        moment was largest there (i.e. the bridge has the weakest support there, and we increased the chance of failure by making the cut in the center). However, this was a 
+        good learning experience to learn more about structural engineering concepts and how we should pay more attention to visual plots and graphs when designing the bridge 
+        to best minimize failure in the real-life design, and not just in theoretical calculations.
+        <div style="text-align: center; margin-top: 20px;">
+            <figure>
+                <img src="/images/praxis/civ/buckled.png" alt="buckled" style="max-width: 75%; height: auto;">
+                <figcaption style="font-size: 0.9em; color: #555;">
+                    Figure 3: 
+                    Image from the bridge testing day. The bridge buckled right away, carrying only about 3N before failure.
+                </figcaption>
+            </figure> 
+        </div>
+    </p>
+
+    <h3>CTMFs: </h3>
+
+    <h4>Represent Model: Hoover Dam Model</h4>
+    <p>
+        The Hoover Dam Model is a model that shows the relationship between reality (technology) and theory (science and math). In 
+        the process of framing the problem and building the bridge, my team and I implicitly used the Hoover Dam model to frame and represent our project.
+        For example, we used mathematical and structural engineering concepts (theory) to perceive the bridge design and how well it was doing during 
+        each iteration, while having the dream/goal of being able to support the 400N load of the train -- iteratively looping through the theory stage of the Hoover Dam model.
+        Once we converged to what we thought was an optimized, theoretical design we then shifted to the Reality stage, building and creating the theoretical world that we have 
+        converged to. 
+    </p>
+    <div style="text-align: center;">
+        <figure>
+            <img src="/images/praxis/civ/hoover-dam.png" alt="hoover dam" style="max-width: 50%; height: auto;">
+            <figcaption style="font-size: 0.9em; color: #555;">
+                Figure 4: 
+                Visual representation of the Hoover Dam Model. Extracted from ESC101 lecture slides[1].
+            </figcaption>
+        </figure>
+    </div>
+    <h4>Diverging Tool: SCAMPER Modify</h4>
+    <p>
+        In the SCAMPER Model, the 'M' stands for Modify, which describes the process of exploring different ways to 
+        improve an existing product or design by adding changes and iterating upon the current design. In this project, we heavily 
+        depended on the use of Modifying existing iterations to improve the bridge design, as this tool was much more efficient than usual diverging tools 
+        to improve the bridge design. By taking these concept from the SCAMPER model and applying them to each design iteration,
+        we were able to improve upon one or more of the bridge's properties to make a design that performs best.
+    </p>
+    <div style="position: relative; text-align: center; top:-30px;">
+        <figure>
+            <div class="flowchart" style="justify-content: center; align-items: center;">
+                <div class="node">
+                    <img src="/images/praxis/civ/iteration_1.png" alt="iteration 1" style="max-width: 110%; height: auto;">
+                </div>
+                <div class="arrow">→</div>
+                <div class="node">
+                    <img src="/images/praxis/civ/iteration_2.png" alt="iteration 2" style="max-width: 110%; height: auto;">
+                </div>
+            </div>
+
+            <figcaption style="position: relative; top: 15px; font-size: 0.9em; color: #555;">
+                Figure 5: 
+                Screenshot from my team's CIV102 Design Report. From the 1st to 2nd iteration, the design experienced significant increase in Factor of Safety (FOS) 
+                in 6/7 FOS values.
+            </figcaption>
+        </figure>
+    </div>
+    <div style="position: relative; top: -35px;">
+        <h4>Converging Concept: Prototyping</h4>
+        <p>
+            Prototyping involves introducing a model to generate or communicate information about a design. In this project, 
+            as we were slowly diverging and converging to our final design through modifying our bridge design, we created mathematical prototypes
+            and graphs to model the various forces and stresses that the bridge would experience whenever we made a change in certain iterations. This was a very useful tool to help us visualize
+            the possible failures that the bridge would be subject to and when they would happen. Using mathematical prototypes such as graphs and mathematical equations allowed us to easily 
+            model the bridge's performance to better optimize the design.
+        </p>
+    </div>
+
+    <div class="popup-close-wrapper">
+        <div class="popup-close" style="position: relative; top: -20px;">click anywhere to close</div>
+    </div>
+
+</div>
