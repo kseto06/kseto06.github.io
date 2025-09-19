@@ -41,6 +41,7 @@ export async function createProjectPopup(): Promise<HTMLElement> {
         }
     });
 
+    attachGifPeek(wrapper);
     return wrapper;
 }
 
@@ -49,6 +50,9 @@ async function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElemen
     if (projectId === 'aegis') {
         popupContent.innerHTML = await fetch('/pages/popups/aegis.html').then(res => res.text());
     }
+
+    //Gif peek functionality
+    attachGifPeek(wrapper);
 
     //Attach back 'click anywhere to close' wrapper
     window.addEventListener(
@@ -108,7 +112,110 @@ async function updatePopupContent(wrapper: HTMLElement, popupContent: HTMLElemen
                     }
                 }
             });
+
+            // reattaching the gif after going back into the projects page
+            attachGifPeek(wrapper);
         });
     }
 
+    // Normal attachment for `.project` elements
+    attachGifPeek(wrapper);
+}
+
+function attachGifPeek(root: HTMLElement): void {
+    let overlay = root.querySelector("#gif-peek-overlay") as HTMLDivElement | null;
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = "gif-peek-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+        overlay.hidden = true;
+        overlay.className = "gif-peek-overlay";
+        overlay.innerHTML = `<img id="gif-peek-image" alt="">`;
+        root.appendChild(overlay);
+    }
+
+    const overlayImg = overlay.querySelector("#gif-peek-image") as HTMLImageElement;
+
+    const HOVER_DELAY = 1500; //ms
+    const isFinePointer = matchMedia('(pointer:fine)').matches;
+
+    let timer: number | null = null;
+    let cleanupActivity: (() => void) | null = null;
+
+    const openOverlay = (src: string, alt = '') => {
+        overlayImg.src = src;
+        overlayImg.alt = alt;
+        overlay.hidden = false;
+        overlay.setAttribute('data-open', 'true');
+        overlay.setAttribute('aria-hidden', 'false');
+
+        const onActivity = () => closeOverlay();
+        const addActivity = () => {
+        window.addEventListener('mousemove', onActivity, { once: true, capture: true });
+        window.addEventListener('scroll', onActivity, { once: true, capture: true });
+        window.addEventListener('click', onActivity, { once: true, capture: true });
+        window.addEventListener('keydown', onActivity, { once: true, capture: true });
+        overlay!.addEventListener('click', onActivity, { once: true });
+        cleanupActivity = () => {
+            window.removeEventListener('mousemove', onActivity, { capture: true } as any);
+            window.removeEventListener('scroll', onActivity, { capture: true } as any);
+            window.removeEventListener('click', onActivity, { capture: true } as any);
+            window.removeEventListener('keydown', onActivity, { capture: true } as any);
+            overlay!.removeEventListener('click', onActivity);
+        };
+        };
+        addActivity();
+    };
+
+    const closeOverlay = () => {
+        overlay!.removeAttribute('data-open');
+        overlay!.setAttribute('aria-hidden', 'true');
+        overlay!.hidden = true;
+        overlayImg.src = '';
+        if (cleanupActivity) cleanupActivity();
+        cleanupActivity = null;
+    };
+
+    const cancelTimer = () => {
+        if (timer !== null) {
+        window.clearTimeout(timer);
+        timer = null;
+        }
+    };
+
+    // mouse hover functionality on `.project` elements for gif activation and deactivation
+    if (isFinePointer) {
+        root.addEventListener(
+            'mouseover',
+            (e) => {
+                const element = (e.target as HTMLElement).closest('.project');
+                if (!element || !root.contains(element)) return;
+                cancelTimer();
+                timer = window.setTimeout(() => {
+                    // src can be the gif or singular image if gif does not exist for that particular project element
+                    const src =
+                        (element.querySelector('.gif-hover') as HTMLImageElement | null)?.src ||
+                        (element.querySelector('.default-img') as HTMLImageElement | null)?.src ||
+                        '';
+                    if (src) {
+                        const alt =
+                        (element.querySelector('img[alt]') as HTMLImageElement | null)?.alt ||
+                        'Preview';
+                        openOverlay(src, alt);
+                    }
+                }, HOVER_DELAY);
+            },
+            true
+        );
+
+        root.addEventListener(
+            'mouseout',
+            (e) => {
+                const element = (e.target as HTMLElement).closest('.project');
+                if (!element || !root.contains(element)) return;
+                cancelTimer();
+            },
+            true
+        );
+    }
 }
