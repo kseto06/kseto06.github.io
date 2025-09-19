@@ -216,7 +216,6 @@
 }
 
 /* Linked List */
-
 .flowchart {
     display: flex;
     align-items: flex-start;
@@ -248,7 +247,6 @@
 }
 
 /* Tree */
-
 .tree {
     display: flex;
     align-items: center;
@@ -320,4 +318,40 @@
 
 .popup-back-wrapper .popup-close:hover {
     text-decoration: underline;
+}
+
+/* gif hover expansion functionality */
+.gif-peek-overlay {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,0.20);
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease;
+}
+
+.gif-peek-overlay[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.gif-peek-overlay img {
+    max-width: min(92vw, 900px);
+    max-height: 86vh;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.4);
+    transform: scale(.96);
+    transition: transform .18s ease;
+}
+
+.gif-peek-overlay[data-open="true"] img {
+    transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gif-peek-overlay, .gif-peek-overlay img { transition: none; }
 }
