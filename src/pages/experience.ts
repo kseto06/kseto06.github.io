@@ -1,7 +1,7 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 
-const resumeFileName: string = "SetoKadenResumeDec2025";
+const resumeFileName: string = "SetoKadenResumeJan2026";
 
 export async function createExperiencePopup(): Promise<HTMLElement> {
     const mainContent: string = await fetch('/pages/experience.html')
