@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { createProjectPopup } from '../pages/projects';
 import { createAboutMePopup } from '../pages/aboutme';
 import { createExperiencePopup } from '../pages/experience';
-import { createPraxisPopup } from '../pages/praxis';
+// import { createPraxisPopup } from '../pages/praxis';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
@@ -64,9 +64,10 @@ export class ActionHandler {
                             page = await createAboutMePopup();
                         } else if (label === "experience") {
                             page = await createExperiencePopup();
-                        } else if (label === "portfolio") {
-                            page = await createPraxisPopup();
-                        }
+                        } 
+                        // else if (label === "portfolio") {
+                        //     page = await createPraxisPopup();
+                        // }
 
                         document.body.appendChild(page);
                     }
