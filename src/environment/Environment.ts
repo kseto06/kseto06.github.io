@@ -351,7 +351,7 @@ export default class Environment {
 
     private addTextPlane(): void {
         const loader: FontLoader = new FontLoader(manager);
-        const headings: string[] = ["about me", "projects", "experience", "portfolio"]
+        const headings: string[] = ["about me", "projects", "experience"] //"portfolio"
 
         loader.load('/fonts/Shikamaru.json', (font) => {
             const geometry = new TextGeometry('Kaden Seto', {
@@ -386,7 +386,7 @@ export default class Environment {
                 roughness: 0.6,
             });
 
-            const yInitial = 2.8;
+            const yInitial = 2.8 - 0.1;
             const spacing = 0.45;
 
             headings.forEach((label, index) => {
