@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
 		"paths": {
 			"three/webgpu": ["node_modules/three/build/three.webgpu.js"],
